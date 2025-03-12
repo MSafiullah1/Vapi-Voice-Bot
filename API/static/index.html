@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI Greeting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>FastAPI Greeting App</h1>
+    
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button onclick="fetchGreeting()">Greet Me</button>
+
+    <div id="result"></div>
+
+    <script>
+        function fetchGreeting() {
+            const name = document.getElementById("nameInput").value;
+            if (!name) {
+                alert("Please enter a name.");
+                return;
+            }
+
+            fetch(`http://127.0.0.1:9000/greet/${name}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("result").innerHTML = `
+                        <p><strong>Greeting:</strong> ${data.greeting}</p>
+                        <p><strong>Length of Name:</strong> ${data.length_of_name}</p>
+                        <p><strong>Uppercase Name:</strong> ${data.uppercase_name}</p>
+                    `;
+                })
+                .catch(error => console.error("Error:", error));
+        }
+    </script>
+
+</body>
+</html>
